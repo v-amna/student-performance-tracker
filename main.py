@@ -1,6 +1,7 @@
-from student import Student
+from student import Student, StudentManager
 
 
 
-Student1 = Student("Alice", "Female", 85.5, 90.0, 92.0, 88.0)
-print(Student1)
+studentmanager=StudentManager()
+studentmanager.create_student()
+studentmanager.list_students()
