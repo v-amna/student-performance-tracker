@@ -98,3 +98,18 @@ class StudentManager:
         student.science_score = updated_data["science_score"] if  updated_data["science_score"] else student.science_score
         student.art_score = updated_data["art_score"] if  updated_data["art_score"] else student.art_score
         print(f"Student with ID {student_id} has been updated.")
+
+
+    # Method to delete a student by their Id
+    def delete_student(self, student_id: int):
+        """Deletes a student by their ID."""
+        confirmation = input(f"Do you want to delete the student with ID {student_id}? (yes/no): ")
+        if confirmation.lower() == "yes":
+            if student_id in self.students:
+                del self.students[student_id]
+                print(f"Student with ID {student_id} has been deleted.")
+            else:
+        
+                print(f"Student with ID {student_id} does not exist.")
+        else: 
+            print("Deletion process canceled.")
