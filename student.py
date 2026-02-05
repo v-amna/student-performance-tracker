@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 
-
+# This class represents a student with their name, gender, and scores in various subjects.
+# The __str__ method is overridden to provide a readable string representation of the student object when printed.
+# dataclass is used to automatically generate special methods like __init__ and __repr__, making it easier to create and manage student objects.
 @dataclass
 class Student:
     name:str
