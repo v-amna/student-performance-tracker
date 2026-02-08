@@ -7,15 +7,19 @@ from dataclasses import dataclass
 class Student:
     name:str
     gender:str
-    english_score:float
-    math_score:float
-    science_score:float
-    art_score:float
+    english_score:int =0
+    math_score:int =0
+    science_score:int =0
+    art_score:int =0
     
     def __str__(self):
-        return f"Name: {self.name}| Gender: {self.gender}| English Score: {self.english_score}| Math Score: {self.math_score}| Science Score: {self.science_score}| Art Score: {self.art_score}"
+        return f"Name: {self.name}| Gender: {self.gender}| total score: {self.total_score()} | English Score: {self.english_score}| Math Score: {self.math_score}| Science Score: {self.science_score}| Art Score: {self.art_score}"
 
 
+    # Method to calculate total score of the student by summing up the scores in all subjects.
+    def total_score(self) -> int:
+        
+        return self.english_score + self.math_score + self.science_score + self.art_score
 # This class is a manager for student objects, to add,update,delete,view,search and filter students.
 class StudentManager:
 
@@ -52,15 +56,15 @@ class StudentManager:
             "art_score": art_score
         }
     
-    # Method to create student object from given dict
+    # Method to create student object from floatgiven dict
     def from_dict(self, data: dict) -> Student:
         return Student(
             name=data["name"],
             gender=data["gender"],
-            english_score=data["english_score"],
-            math_score=data["math_score"],
-            science_score=data["science_score"],
-            art_score=data["art_score"]
+            english_score=int(data["english_score"]),
+            math_score=int(data["math_score"]),
+            science_score=int(data["science_score"]),
+            art_score=int(data["art_score"])
         )
     
     # read student details from the user and create a new student object, then add it to the manager.
@@ -86,17 +90,17 @@ class StudentManager:
         if student_id not in self.students:
             print(f"Student with ID {student_id} does not exist.")
             return
-        
+        float
         updated_data = self.read_student_details()
         student = self.students[student_id]
     
         # Update only the fields that are provided if not empty
         student.name = updated_data["name"] if  updated_data["name"] else student.name
         student.gender = updated_data["gender"] if  updated_data["gender"] else student.gender
-        student.english_score = updated_data["english_score"] if  updated_data["english_score"] else student.english_score
-        student.math_score = updated_data["math_score"] if  updated_data["math_score"] else student.math_score
-        student.science_score = updated_data["science_score"] if  updated_data["science_score"] else student.science_score
-        student.art_score = updated_data["art_score"] if  updated_data["art_score"] else student.art_score
+        student.english_score = int(updated_data["english_score"]) if  updated_data["english_score"] else student.english_score
+        student.math_score = int(updated_data["math_score"]) if  updated_data["math_score"] else student.math_score
+        student.science_score = int(updated_data["science_score"]) if  updated_data["science_score"] else student.science_score
+        student.art_score = int(updated_data["art_score"]) if  updated_data["art_score"] else student.art_score
         print(f"Student with ID {student_id} has been updated.")
 
 
@@ -113,3 +117,15 @@ class StudentManager:
                 print(f"Student with ID {student_id} does not exist.")
         else: 
             print("Deletion process canceled.")
+
+    #Method to search for students by id 
+
+    def search_student_by_id(self, student_id: int):
+        """Searches for a student by their ID."""
+   
+        if student_id in self.students:
+            print(f"ID: {student_id} | {self.students[student_id]}")
+        else:
+            print(f"Student with ID {student_id} does not exist.")
+   
+    
