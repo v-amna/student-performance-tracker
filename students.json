@@ -1,0 +1,56 @@
+[
+    {
+        "id": 1,
+        "name": "New John",
+        "gender": "Male",
+        "english_score": 85,
+        "math_score": 90,
+        "science_score": 80,
+        "art_score": 34
+    },
+    {
+        "id": 2,
+        "name": "Chakka",
+        "gender": "Male",
+        "english_score": 85,
+        "math_score": 90,
+        "science_score": 80,
+        "art_score": 67
+    },
+    {
+        "id": 3,
+        "name": "Doe D",
+        "gender": "Male",
+        "english_score": 34,
+        "math_score": 43,
+        "science_score": 56,
+        "art_score": 9
+    },
+    {
+        "id": 4,
+        "name": "Ela F",
+        "gender": "Female",
+        "english_score": 76,
+        "math_score": 76,
+        "science_score": 89,
+        "art_score": 45
+    },
+    {
+        "id": 5,
+        "name": "Asds df",
+        "gender": "Female",
+        "english_score": 56,
+        "math_score": 77,
+        "science_score": 88,
+        "art_score": 77
+    },
+    {
+        "id": 6,
+        "name": "AMee",
+        "gender": "Female",
+        "english_score": 89,
+        "math_score": 78,
+        "science_score": 87,
+        "art_score": 78
+    }
+]
