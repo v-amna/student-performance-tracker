@@ -52,5 +52,14 @@
         "math_score": 78,
         "science_score": 87,
         "art_score": 78
+    },
+    {
+        "id": 7,
+        "name": "l;kbl",
+        "gender": "female",
+        "english_score": 78,
+        "math_score": 87,
+        "science_score": 67,
+        "art_score": 77
     }
 ]

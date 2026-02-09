@@ -46,6 +46,7 @@ class StudentManager:
     # Method to create a new student by reading user input.
     # It returns student objects
     # TODO: Add input validation 
+    
     def read_student_details(self) -> dict:
         name = input("Enter student name: ")
         gender = input("Enter student gender: ")
@@ -63,6 +64,7 @@ class StudentManager:
         }
     
     # Method to create student object from given dictionary
+
     def from_dict(self, data: dict) -> Student:
         return Student(
             id=data["id"] if "id" in data else 0,  # ID will be assigned when the student is added to the manager
@@ -76,11 +78,13 @@ class StudentManager:
     
     # Method to add a student from given dictionary, 
     # it creates a student object and adds it to the manager.
+
     def add_student_from_dict(self, data: dict) -> int:
         student = self.from_dict(data)
         return self.add_student(student)
 
     # read student details from the user and create a new student object, then add it to the manager.
+
     def create_student(self):
         print("Enter details for the new student:\n")
         student = self.from_dict(
@@ -91,6 +95,7 @@ class StudentManager:
         print(f"Student added with ID: {student_id}")
 
     # Method to list all students 
+
     def list_students(self):
         if not self.students:
             print("No students exist.")
@@ -99,6 +104,7 @@ class StudentManager:
             print(f"{student}")
     
     # Method to Update by student Id
+
     def update_student(self, student_id: int):
         print("Enter new details for the student (leave blank to keep current value):\n")
         if student_id not in self.students:
@@ -108,6 +114,7 @@ class StudentManager:
         student = self.students[student_id]
     
         # Update only the fields that are provided if not empty
+
         student.name = updated_data["name"] if  updated_data["name"] else student.name
         student.gender = updated_data["gender"] if  updated_data["gender"] else student.gender
         student.english_score = int(updated_data["english_score"]) if  updated_data["english_score"] else student.english_score
@@ -116,8 +123,10 @@ class StudentManager:
         student.art_score = int(updated_data["art_score"]) if  updated_data["art_score"] else student.art_score
         print(f"Student with ID {student_id} has been updated.")
         self._save()  # Save the updated students data to the JSON file after updating a student
+        print("Student details updated successfully.")
 
     # Method to delete a student by their Id
+
     def delete_student(self, student_id: int):
         """Deletes a student by their ID."""
         confirmation = input(f"Do you want to delete the student with ID {student_id}? (yes/no): ")
@@ -133,6 +142,7 @@ class StudentManager:
             print("Deletion process canceled.")
 
     #Method to search for students by id 
+
     def search_student_by_id(self, student_id: int):
         """Searches for a student by their ID."""
    
@@ -142,6 +152,7 @@ class StudentManager:
             print(f"Student with ID {student_id} does not exist.")
 
     # Method to create a json dump of students data
+
     def _save(self):
         """Saves the students data to a JSON file."""
         with open(self.file_path, 'w') as f:
@@ -151,6 +162,7 @@ class StudentManager:
         print(f"Students data file save failed to save to {self.file_path}.")
 
     # Method to load students data from a json file
+
     def load(self,file_path: str = None):
         """Loads the students data from a JSON file."""
         self.file_path = file_path if file_path else self.file_path
@@ -166,5 +178,29 @@ class StudentManager:
                 self.students[student.id] = student
                 self.next_id = max(self.next_id, student.id + 1)  # Ensure next_id is always greater than the highest existing ID
 
-    #Method to filter students by Marks ,whose got distINCTION, FIRST CLASS, SECOND CLASS, THIRD CLASS and FAIL    
+    #Method to filter students by Marks ,whose got DISINCTION, FIRST CLASS, SECOND CLASS, THIRD CLASS and FAIL    
     
+    def filter_students_by_marks(self, category: str):
+        """Filters students by their marks category."""
+        category = category.lower()
+        filtered_students = []
+        for student in self.students.values():
+            total_score = student.total_score()
+            if category == "distinction" and total_score >= 380:
+                filtered_students.append(student)
+            elif category == "first class" and 300 <= total_score < 380:
+                filtered_students.append(student)
+            elif category == "second class" and 240 <= total_score < 300:
+                filtered_students.append(student)
+            elif category == "third class" and 180 <= total_score < 240:
+                filtered_students.append(student)
+            elif category == "fail" and total_score < 180:
+                filtered_students.append(student)
+
+        if not filtered_students:
+            print(f"No students found in the '{category}' category.")
+        else:
+            print(f"Students in the '{category}' category:")
+            for student in filtered_students:
+                print(student)   
+
