@@ -1,32 +1,116 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Student Performance Tracker
 
-Welcome,
+A terminal-based application for managing student records and analyzing
+performance across multiple subjects. It supports CRUD operations, search,
+filtering by performance category, and JSON persistence.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **May 26, 2025**
+## Key Features
 
-## Reminders
+- Add, update, delete, and list students
+- Search students by ID
+- Filter students by performance category
+- Import student data from a JSON file
+- Data persistence to a JSON file on every change
+- Input validation for names, gender, and scores
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+## Tech Stack
 
-## Creating the Heroku app
+- Python 3 (command-line application)
+- JSON for data storage
+- Node/Total.js wrapper for the web terminal (deployment environment)
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## How It Works
 
-1. `heroku/python`
-2. `heroku/nodejs`
+- The app starts in run.py and launches the App class.
+- App provides the menu and delegates actions to StudentManager.
+- StudentManager handles all business logic and saves data to students.json.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Menu Options
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+1. List all students
+2. Add new student
+3. Update student
+4. Delete student
+5. Search students by ID
+6. Filter by marks category
+7. Import from JSON file
+0. Exit
 
-Connect your GitHub repository and deploy as normal.
+## Data Model
+
+Each student record includes:
+
+- id (auto-assigned)
+- name (full name)
+- gender (Male or Female)
+- english_score (0-100)
+- math_score (0-100)
+- science_score (0-100)
+- art_score (0-100)
+
+Total score is computed as the sum of the four subject scores.
+
+### Performance Categories
+
+- Distinction: total >= 380
+- First Class: 300 to 379
+- Second Class: 240 to 299
+- Third Class: 180 to 239
+- Fail: total < 180
+
+## Project Structure
+
+- run.py: Application entry point
+- main.py: Menu and app flow
+- student.py: Student model and manager
+- students.json: Stored student data
+- index.js, controllers/default.js, views/: Web terminal wrapper
+
+## Setup
+
+1. Ensure Python 3 is installed.
+2. (Optional) Create and activate a virtual environment.
+3. Install Python dependencies (none required by default):
+
+	 pip install -r requirements.txt
+
+## Run Locally
+
+From the project root:
+
+python3 run.py
+
+## Importing Data
+
+Use the menu option “Import from JSON file” and provide a filename such as
+students.json. The file must be a JSON array of objects with the same fields
+as the data model.
+
+Example format:
+
+[
+	{
+		"id": 1,
+		"name": "Jane Doe",
+		"gender": "Female",
+		"english_score": 80,
+		"math_score": 90,
+		"science_score": 85,
+		"art_score": 75
+	}
+]
+
+## Deployment Notes (Heroku / CI Template)
+
+If deploying using the Code Institute terminal template:
+
+1. Add buildpacks in this order:
+	 - heroku/python
+	 - heroku/nodejs
+2. Set config var PORT to 8000.
+3. If using credentials, set config var CREDS with the JSON value.
 
 ## Constraints
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
----
-
-Happy coding!
+The deployment terminal is 80 columns by 24 rows, so keep output within
+that width for readability.

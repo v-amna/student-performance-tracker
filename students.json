@@ -54,12 +54,39 @@
         "art_score": 78
     },
     {
-        "id": 7,
-        "name": "l;kbl",
+        "id": 8,
+        "name": "Sharuk khan",
+        "gender": "Male",
+        "english_score": 67,
+        "math_score": 90,
+        "science_score": 92,
+        "art_score": 89
+    },
+    {
+        "id": 9,
+        "name": "Rayha ali",
+        "gender": "Female",
+        "english_score": 90,
+        "math_score": 95,
+        "science_score": 98,
+        "art_score": 99
+    },
+    {
+        "id": 10,
+        "name": "mavel lenuza",
         "gender": "female",
-        "english_score": 78,
-        "math_score": 87,
-        "science_score": 67,
-        "art_score": 77
+        "english_score": 95,
+        "math_score": 98,
+        "science_score": 99,
+        "art_score": 97
+    },
+    {
+        "id": 11,
+        "name": "shibu shahi",
+        "gender": "male",
+        "english_score": 69,
+        "math_score": 78,
+        "science_score": 89,
+        "art_score": 90
     }
 ]

@@ -6,6 +6,7 @@ from pathlib import Path
 # This class represents a student with their name, gender, and scores in various subjects.
 # The __str__ method is overridden to provide a readable string representation of the student object when printed.
 # dataclass is used to automatically generate special methods like __init__ and __repr__, making it easier to create and manage student objects.
+
 @dataclass
 class Student:
     id:int
@@ -20,10 +21,13 @@ class Student:
         return f"Id: {self.id} | Name: {self.name} | Gender: {self.gender} | English Score: {self.english_score} | Math Score: {self.math_score} | Science Score: {self.science_score} | Art Score: {self.art_score} | Total score: {self.total_score()}"
 
     # Method to calculate total score of the student by summing up the scores in all subjects.
+
     def total_score(self) -> int:
+        """Calculates the total score of the student by summing up the scores in all subjects."""
         return self.english_score + self.math_score + self.science_score + self.art_score
     
 # This class is a manager for student objects, to add,update,delete,view,search and filter students.
+
 class StudentManager:
 
     # Dictionary to store student objects with their Id as the key.  
@@ -34,26 +38,103 @@ class StudentManager:
 
     file_path: str = "students.json"
 
-
     # Method to add a new student and returns the assigned student Id.
+
     def add_student(self, student: Student) -> int:
+        """Adds a new student to the manager and returns the assigned student ID."""
         student_id = self.next_id
         student.id = student_id  # Assign the generated ID to the student object
         self.students[student_id] = student
         self.next_id += 1
         return student_id
     
+    # Method to validate given user input is a valid full name
+    # It checks if the name is not empty and contains at least two parts (first name and last name).
+
+    def _validate_name(self, name: str, allow_empty: bool=False) -> bool:
+        """Validates that the name is a valid full name (first and last name) or empty if allow_empty is True."""
+        if not name.strip():
+            return allow_empty
+    
+        parts = name.split()
+        return len(parts) >= 2
+    
+    # Method to validate given user input is either Male, Female
+    # Or it's empty when allow_empty is set to True on update to skip
+
+    def _validate_gender(self, gender: str, allow_empty: bool=False) -> bool:
+        """Validates that the gender is either 'Male' or 'Female' or empty if allow_empty is True."""
+        if not gender.strip():
+            return allow_empty
+        return gender.lower() in ["male", "female"]
+    
+    # Method to validate give user input is a valid score, 
+    # which is an integer between 0 and 100, or it's empty when allow_empty is set to True.
+
+    def _validate_score(self, score: str, allow_empty: bool=False) -> bool:
+        """Validates that the score is an integer between 0 and 100 or empty if allow_empty is True."""
+        if not score.strip():
+            return allow_empty
+        if not score.isdigit():
+            return False
+        value = int(score)
+        return 0 <= value <= 100
+
+    # Method to readinput with given prompt unitl a valid input is provided, 
+    # it uses the provided validation function to check the validity of the input 
+    # and displays the given error message if the input is invalid.
+
+    def _read_validated_input(self, prompt: str, validation_func, error_message: str, allow_empty: bool=False) -> str:
+        """Reads input from the user with validation."""
+        while True:
+            user_input = input(prompt)
+            if validation_func(user_input, allow_empty=allow_empty):
+                return user_input
+            print(error_message)
+
     # Method to create a new student by reading user input.
     # It returns student objects
-    # TODO: Add input validation 
-    
-    def read_student_details(self) -> dict:
-        name = input("Enter student name: ")
-        gender = input("Enter student gender: ")
-        english_score = input("Enter English score: ")
-        math_score = input("Enter Math score: ")
-        science_score = input("Enter Science score: ")
-        art_score = input("Enter Art score: ")
+
+    def read_student_details(self,is_update=False) -> dict:
+        """Reads student details from user input and returns a dictionary of the details."""
+        
+        name = self._read_validated_input(
+                prompt="Enter student name: ", 
+                validation_func=self._validate_name, 
+                error_message="Invalid name. Please enter a valid full name (first and last name).", 
+                allow_empty=is_update
+            )        
+        gender = self._read_validated_input(
+                prompt="Enter student gender: ",
+                validation_func=self._validate_gender,
+                error_message="Invalid gender. Please enter 'Male' or 'Female'.",
+                allow_empty=is_update
+            )
+        english_score = self._read_validated_input(
+                prompt="Enter English score: ",
+                validation_func=self._validate_score,
+                error_message="Invalid score. Please enter an integer between 0 and 100.",
+                allow_empty=is_update
+            )
+        math_score = self._read_validated_input(
+                prompt="Enter Math score: ",
+                validation_func=self._validate_score,
+                error_message="Invalid score. Please enter an integer between 0 and 100.",
+                allow_empty=is_update
+            )
+        science_score = self._read_validated_input(
+                prompt="Enter Science score: ",
+                validation_func=self._validate_score,
+                error_message="Invalid score. Please enter an integer between 0 and 100.",
+                allow_empty=is_update
+            )
+        art_score = self._read_validated_input(
+                prompt="Enter Art score: ",
+                validation_func=self._validate_score,
+                error_message="Invalid score. Please enter an integer between 0 and 100.",
+                allow_empty=is_update
+            )
+        
         return {
             "name": name,
             "gender": gender,
@@ -66,6 +147,7 @@ class StudentManager:
     # Method to create student object from given dictionary
 
     def from_dict(self, data: dict) -> Student:
+        """Creates a Student object from a dictionary of student details."""
         return Student(
             id=data["id"] if "id" in data else 0,  # ID will be assigned when the student is added to the manager
             name=data["name"],
@@ -80,12 +162,14 @@ class StudentManager:
     # it creates a student object and adds it to the manager.
 
     def add_student_from_dict(self, data: dict) -> int:
+        """Adds a student to the manager from a dictionary of student details and returns the assigned student ID."""
         student = self.from_dict(data)
         return self.add_student(student)
 
     # read student details from the user and create a new student object, then add it to the manager.
 
     def create_student(self):
+        """Creates a new student by reading details from user input and adds it to the manager."""
         print("Enter details for the new student:\n")
         student = self.from_dict(
             self.read_student_details())
@@ -97,6 +181,7 @@ class StudentManager:
     # Method to list all students 
 
     def list_students(self):
+        """Lists all students in the manager."""
         if not self.students:
             print("No students exist.")
             return
@@ -106,11 +191,12 @@ class StudentManager:
     # Method to Update by student Id
 
     def update_student(self, student_id: int):
+        """Updates a student by their ID."""
         print("Enter new details for the student (leave blank to keep current value):\n")
         if student_id not in self.students:
             print(f"Student with ID {student_id} does not exist.")
             return
-        updated_data = self.read_student_details()
+        updated_data = self.read_student_details(is_update=True)
         student = self.students[student_id]
     
         # Update only the fields that are provided if not empty
@@ -145,7 +231,9 @@ class StudentManager:
 
     def search_student_by_id(self, student_id: int):
         """Searches for a student by their ID."""
-   
+        if not isinstance(student_id, int):
+            print("Invalid ID. Please enter a valid integer ID.")
+            return
         if student_id in self.students:
             print(f"ID: {student_id} | {self.students[student_id]}")
         else:
@@ -176,10 +264,10 @@ class StudentManager:
             for student_data in students_data:
                 student = self.from_dict(student_data)
                 self.students[student.id] = student
-                self.next_id = max(self.next_id, student.id + 1)  # Ensure next_id is always greater than the highest existing ID
+                self.next_id = max(self.next_id, student.id + 1)  # confirm next_id is always greater than the highest existing ID
 
     #Method to filter students by Marks ,whose got DISINCTION, FIRST CLASS, SECOND CLASS, THIRD CLASS and FAIL    
-    
+
     def filter_students_by_marks(self, category: str):
         """Filters students by their marks category."""
         category = category.lower()
