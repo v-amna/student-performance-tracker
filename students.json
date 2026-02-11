@@ -73,10 +73,10 @@
     },
     {
         "id": 10,
-        "name": "mavel lenuza",
+        "name": " ",
         "gender": "female",
         "english_score": 95,
-        "math_score": 98,
+        "math_score": 99,
         "science_score": 99,
         "art_score": 97
     },
@@ -88,5 +88,23 @@
         "math_score": 78,
         "science_score": 89,
         "art_score": 90
+    },
+    {
+        "id": 12,
+        "name": "fayiza sha",
+        "gender": "female",
+        "english_score": 90,
+        "math_score": 95,
+        "science_score": 96,
+        "art_score": 98
+    },
+    {
+        "id": 13,
+        "name": "adam khan",
+        "gender": "male",
+        "english_score": 90,
+        "math_score": 95,
+        "science_score": 99,
+        "art_score": 99
     }
 ]
