@@ -1,6 +1,9 @@
-from unicodedata import category
-from student import Student, StudentManager
-
+"""Main module for the student performance tracker application.
+This module defines the App class, which serves as the main 
+entry point for the application.
+The App class provides a terminal-based menu interface for managing student records,
+including listing, adding, updating, deleting, searching, and filtering students."""
+from student import StudentManager
 class App:
     """Terminal-based student performance tracker application."""
     MENU = """
@@ -28,8 +31,10 @@ class App:
         print(self.MENU)
         choice = input("Enter your choice: ")
         return choice
-    
+
     def run(self):
+        """Runs the main loop of the application, displaying the menu and handling user input 
+           to perform various student management operations."""
         choice = self._display_menu()
         while choice != "0":
             if choice == "1":
@@ -56,14 +61,14 @@ class App:
                 except ValueError:
                     print("Invalid input. Please enter a valid integer ID.")
             elif choice == "6":
-                category = input("Enter category to filter students by (first class, second class, third class, fail): ")
+                category = input(" filter students by(first class,second class,fail):")
                 self.student_manager.filter_students_by_marks(category)
             elif choice == "7":
                 filename = input("Enter the filename to import from (e.g., students.json): ")
                 self.student_manager.load(filename)
             else:
                 print("Invalid choice. Please try again.")
-            
+
             print("\n" + "="*50 + "\n")
             input("Press Enter to continue...")
             choice = self._display_menu()
@@ -71,3 +76,4 @@ class App:
 if __name__ == "__main__":
     # Run the application
     App().run()
+    print("Exiting the Student Management System. Goodbye!")
