@@ -85,7 +85,7 @@
         "name": "shibu shahi",
         "gender": "male",
         "english_score": 69,
-        "math_score": 78,
+        "math_score": 100,
         "science_score": 89,
         "art_score": 90
     },
@@ -106,5 +106,14 @@
         "math_score": 95,
         "science_score": 99,
         "art_score": 99
+    },
+    {
+        "id": 14,
+        "name": "roua ram",
+        "gender": "female",
+        "english_score": 96,
+        "math_score": 97,
+        "science_score": 99,
+        "art_score": 100
     }
 ]
